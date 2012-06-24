@@ -22,9 +22,9 @@ export HISTTIMEFORMAT='%F %T '
 # ------ End History
 
 # Loads the information specific to this machine, like EMAIL, NAME, etc.
-if [ -f .host-specific.sh ]
+if [ -f .localrc ]
 then
-    source .host-specific.sh
+    source .localrc
 fi
 
 #  ------ Set prompt command and Window title
