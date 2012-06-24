@@ -1,0 +1,109 @@
+# ------ git Autocomplete
+source ~/.git-completion.bash 
+source ~/.git-flow-completion.sh
+# ------ End git Autocomplete
+
+# Terminal Colors with SIMBL plugin #
+# export CLICOLOR=1;
+
+# export ALTERNATE_EDITOR=emacs EDITOR=emacsclient VISUAL=emacsclient
+export EDITOR=mate
+
+# Logger #
+export LOGGERTXT_PATH=~/Dropbox/MasterThesis/log.md
+alias l="~/Dropbox/logger.sh"
+# ------ End Logger
+
+# ------ Code for history
+# Ignore duplicates
+export HISTCONTROL=ignoredups
+# Diplay history with date and time
+export HISTTIMEFORMAT='%F %T '
+# ------ End History
+
+# Loads the information specific to this machine, like EMAIL, NAME, etc.
+if [ -f .host-specific.sh ]
+then
+    source .host-specific.sh
+fi
+
+#  ------ Set prompt command and Window title
+# Show host:current folder and user
+# PROMPT_COMMAND='echo -ne "\033]0;${USER}@${HOSTNAME%%.*}:${PWD/#$HOME/~}"; echo -ne "\007"'
+
+PROMPT_TITLE='echo -ne "\033]0;${USER}@${HOSTNAME%%.*}:${PWD/#$HOME/~}\007"'
+PROMPT_COMMAND='echo -ne "\033]0;@${HOSTNAME%%.*}:${PWD/#$HOME/~}"; echo -ne "\007"'
+
+# BEGIN Keep a history of recently accessed folders and facilitate changes
+# From Matt Might
+# http://matt.might.net/articles/console-hacks-exploiting-frequency/
+# # Change to most recently used directory:
+# if [ -f ~/.lastdir ]; then
+#     cd "`cat ~/.lastdir`"
+# fi
+# 
+# export LASTDIR="/"
+# 
+# function prompt_command {
+# 
+#   # Remember where we are:
+#   pwd > ~/.lastdir
+# 
+#   # Record new directory on change.
+#   newdir=`pwd`
+#   if [ ! "$LASTDIR" = "$newdir" ]; then 
+#     /Users/chabot/bin/markdir.pl
+# 
+#     # List contents:
+#     ls -t | head -7
+#   fi
+# 
+#   export LASTDIR=$newdir
+# }
+# 
+# export PROMPT_COMMAND="${PROMPT_COMMAND:-:} && ${PROMPT_TITLE} && prompt_command"
+# END Matt Might
+
+# Current folder, and name of current git branch in color
+# export PS1="\W\[\033[0,33m\]\$(parse_git_branch)\[\033[0m\] $ "
+# On two lines: 1-Current folder(blue) and git branch(orange), 2-current user
+export PS1='\[\e[0;34m\]\w\[\e[0;33m\]$(__git_ps1 "(%s)")$(parse_git_dirty)\[\e[0m\]\n\u $ '
+
+
+# Show current git branch and add * if uncommited changes
+function parse_git_dirty {
+  git diff --quiet HEAD &>/dev/null
+  [[ $? == 1 ]] && echo "*"
+}
+
+# Return name of the current branch
+# parse_git_branch() {
+#   git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/(\1)/'
+# }
+#  ------ End Set prompt command and Window title
+
+# Add bash aliases.
+if [ -f ~/.bash_aliases ]; then
+    source ~/.bash_aliases
+fi
+
+###begin-jump-bash_profile
+#
+# Installation:
+#
+# jump >> ~/.bash_profile && source ~/.bash_profile
+#
+function jump {
+  local si="$IFS";
+  IFS=$'\n';
+  local newDir=$(JUMPPROFILE=1 command jump "$@");
+  cd "$newDir";
+  IFS="$si";
+}
+alias j="jump -a"
+###end-jump-bash_profile
+
+PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
+
+# Taskworrior autocompletion
+source /usr/local/Cellar/task/2.0.0/share/doc/task/scripts/bash/task_completion.sh

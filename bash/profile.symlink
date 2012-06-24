@@ -1,0 +1,89 @@
+# # Ruby PATH
+# export PATH="/Library/Ruby/Gems/1.8:~/.gem/ruby/1.8:/System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/gems/1.8:${PATH}"
+# export PATH="/usr/local/Cellar/ruby/1.9.3-p0/lib/ruby/gems/1.9.1:${PATH}"
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm" 
+# # Multimarkdown PATH
+PATH="~/Library/Application Support/MultiMarkdown/bin:${PATH}"
+
+# # Scripts from here and there
+export PATH="${HOME}/bin:${PATH}"
+
+# Stian's Dokuwiki Researchr scripts
+export PATH="${HOME}/bin/researchr:${PATH}"
+
+# /usr/local/ directory
+export PATH="/usr/local/bin:/usr/local/sbin:${PATH}" 
+
+# Matlab directory
+export PATH="/Applications/MATLAB_R2011a.app/bin:${PATH}"
+
+# Setting PATH for EPD-7.1-2
+# The orginal version is saved in .bash_profile.pysave
+# PATH="/Library/Frameworks/Python.framework/Versions/Current/bin:${PATH}"
+
+# brewed Python path
+export PATH="/usr/local/share/python":$PATH
+export PYTHONPATH="/usr/local/lib/python2.7/site-packages":$PYTHONPATH
+export PYTHONPATH="${HOME}/Library/Python/2.7/site-packages":$PYTHONPATH
+
+MKL_NUM_THREADS=1
+export MKL_NUM_THREADS
+
+# end EPD-7.1-2
+
+export LESS="-R"
+
+export HISTFILESIcE=10000 # Record last 10,000 commands
+export HISTSIZE=10000 # Record last 10,000 commands per session
+
+# export PYTHONPATH="${HOME}/Library/Python/2.7/site-packages/pip-1.0.2-py2.7.egg:${PYTHONPATH}"
+# export PYTHONPATH="${HOME}/Library/Python/2.7/site-packages/spyder-2.1.7-py2.7.egg-info:${PYTHONPATH}"
+# export PYTHONPATH="${HOME}/Library/Python/2.7/site-packages/spyderlib:${PYTHONPATH}"
+# export PYTHONPATH="${HOME}/Library/Python/2.7/site-packages/spyderplugins:${PYTHONPATH}"
+# export PYTHONPATH="${HOME}/Library/Python/2.7/site-packages:${PYTHONPATH}"
+
+SSH_ENV="$HOME/.ssh/environment"
+
+# start the ssh-agent
+function start_agent {
+    echo "Initializing new SSH agent..."
+    # spawn ssh-agent
+    ssh-agent | sed 's/^echo/#echo/' > "$SSH_ENV"
+    echo succeeded
+    chmod 600 "$SSH_ENV"
+    . "$SSH_ENV" > /dev/null
+    ssh-add
+}
+
+# test for identities
+function test_identities {
+    # test whether standard identities have been added to the agent already
+    ssh-add -l | grep "The agent has no identities" > /dev/null
+    if [ $? -eq 0 ]; then
+        ssh-add
+        # $SSH_AUTH_SOCK broken so we start a new proper agent
+        if [ $? -eq 2 ];then
+            start_agent
+        fi
+    fi
+}
+
+# check for running ssh-agent with proper $SSH_AGENT_PID
+if [ -n "$SSH_AGENT_PID" ]; then
+    ps -ef | grep "$SSH_AGENT_PID" | grep ssh-agent > /dev/null
+    if [ $? -eq 0 ]; then
+	test_identities
+    fi
+# if $SSH_AGENT_PID is not properly set, we might be able to load one from
+# $SSH_ENV
+else
+    if [ -f "$SSH_ENV" ]; then
+	. "$SSH_ENV" > /dev/null
+    fi
+    ps -ef | grep "$SSH_AGENT_PID" | grep -v grep | grep ssh-agent > /dev/null
+    if [ $? -eq 0 ]; then
+        test_identities
+    else
+        start_agent
+    fi
+fi

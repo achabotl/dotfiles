@@ -1,0 +1,12 @@
+#! /bin/bash
+ 
+TMP_FILE=`mktemp /tmp/big.XXXXXX` || exit 1
+cat - | head -20 > $TMP_FILE
+ 
+osascript <<EOF
+tell application "LaunchBar"
+    display in large type (do shell script("cat $TMP_FILE"))
+end tell
+EOF
+ 
+rm $TMP_FILE

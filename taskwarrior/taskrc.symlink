@@ -1,0 +1,166 @@
+# [Created by task 2.0.0 4/6/2012 00:42:43]
+# Taskwarrior program configuration file.
+# For more documentation, see http://taskwarrior.org or try 'man task', 'man task-faq',
+# 'man task-tutorial', 'man task-color', 'man task-sync' or 'man taskrc'
+
+# Here is an example of entries that use the default, override and blank values
+#   variable=foo   -- By specifying a value, this overrides the default
+#   variable=      -- By specifying no value, this means no default
+#   #variable=foo  -- By commenting out the line, or deleting it, this uses the default
+
+# Use the command 'task show' to see all defaults and overrides
+
+# Files
+data.location=~/Dropbox/Backup/twtasks
+
+# Color theme (uncomment one to use)
+include ~/Dropbox/Backup/DotFiles/solarized-dark-256.theme
+
+color=on
+search.case.sensitive=no
+xterm.title=on
+confirmation=off
+
+dateformat.annotation=Y-m-d
+dateformat=Y-m-d
+dateformat.report=Y-m-d
+
+editor=vim
+
+
+report.active.columns           = id,project,priority,due,start.active,entry.age,description
+report.active.description       = Lists active tasks
+report.active.filter            = status:pending start.any:
+report.active.labels            = ID,Project,Pri,Due,Active,Age,Description
+report.active.sort              = due+,priority-,project+,description+
+
+report.all.columns              = id,status,description,project,priority,wait,due,end,start.active,entry.age,tags
+report.all.description          = Lists all pending and completed tasks
+report.all.filter               = status.not:deleted
+report.all.labels               = ID,Status,Description,Project,Pri,Start,Due,Completed,Active,Age, Context
+report.all.sort                 = project+,due+,end+,priority-,start-,description+
+
+report.blocked.columns          = id,depends,project,priority,due,start.active,entry.age,description
+report.blocked.description      = Lists all blocked tasks
+report.blocked.filter           = status:pending depends.any: -waiting
+report.blocked.labels           = ID,Deps,Project,Pri,Due,Active,Age,Description
+report.blocked.sort             = due+,id+,start-,roject+,description+
+
+report.completed.columns        = end,project,priority,entry.age,description,uuid
+report.completed.description    = Lists completed tasks
+report.completed.filter         = status:completed
+report.completed.labels         = Complete,Project,Pri,Age,Description,UUID
+report.completed.sort           = end+,priority-,project+,description+
+
+# GTD
+# From http://www.pedramhayati.com/thoughts/linux/303-gtd-with-taskwarrior
+report.gtd.columns              = tags,id,description.count,project,due
+report.gtd.description          = List GTD style task
+report.gtd.filter               = status:pending limit:page depends.none: -waiting -hold
+report.gtd.labels               = Context,ID,Task,Project,Due
+report.gtd.sort                 = tags+,due+,project+,description+
+
+report.home.columns             = tags,project,start.active,id,description.count,due,priority
+report.home.labels              = Context,Project,A,ID,Description,Due,Pri
+report.home.filter            	= status:pending depends.none: -waiting -hold limit:page tags.hasnt:dtu -errands pro.hasnt:phd
+report.home.sort                = tags+,urgency-,due+,priority-,start-,project+,description+
+report.home.description         = Lists the most urgent tasks that I can do at home
+
+report.inbox.columns             = tags,project,id,description,due
+report.inbox.labels              = Context,Project,ID,Description,Due
+report.inbox.filter              = status:pending +inbox
+report.inbox.sort                = Entered+
+report.inbox.description         = Inbox
+
+
+report.list.columns             = id,priority,description.count,project,wait,due
+report.list.description         = Lists all pending tasks
+report.list.filter              = status:pending -hold -waiting
+report.list.labels              = ID,Pri,Description,Project,Start,Due
+report.list.sort                = due+,priority-,start-,project+,description+
+
+report.long.columns             = id,project,priority,entry,start,due,recur,due.countdown,entry.age,depends,tags,description
+report.long.description         = Lists all pending tasks
+report.long.filter              = status:pending
+report.long.labels              = ID,Project,Pri,Added,Started,Due,Recur,Countdown,Age,Deps,Tags,Description
+report.long.sort                = due+,priority-,project+,description+
+
+report.ls.columns               = id,project,priority,description
+report.ls.description           = Minimal listing of all pending tasks
+report.ls.filter                = status:pending
+report.ls.labels                = ID,Project,Pri,Description
+report.ls.sort                  = priority-,project+,description+
+
+report.minimal.columns          = id,project,description.truncated
+report.minimal.description      = Minimal listing of all pending tasks
+report.minimal.filter           = status:pending
+report.minimal.labels           = ID,Project,Description
+report.minimal.sort             = project+,description+
+
+report.newest.columns           = id,project,priority,due,start.active,entry.age,description
+report.newest.description       = Shows the newest tasks
+report.newest.filter            = status:pending limit:10
+report.newest.labels            = ID,Project,Pri,Due,Active,Age,Description
+report.newest.sort              = id-
+
+report.next.columns             = tags,project,start.active,id,description.count,due,priority
+report.next.labels              = Context,Project,A,ID,Description,Due,Pri
+report.next.filter              = status:pending depends.none: -waiting -hold limit:page pro.hasnt:phd.
+report.next.sort                = urgency-,tags+,due+,priority-,start-,project+,description+
+report.next.description         = Lists the most urgent tasks
+
+report.oldest.columns           = id,project,priority,due,start.active,entry.age,description
+report.oldest.description       = Shows the oldest tasks
+report.oldest.filter            = status:pending limit:10
+report.oldest.labels            = ID,Project,Pri,Due,Active,Age,Description
+report.oldest.sort              = id+
+
+report.overdue.columns          = id,project,priority,due,start.active,entry.age,description
+report.overdue.description      = Lists overdue tasks
+report.overdue.filter           = status:pending due.before:now
+report.overdue.labels           = ID,Project,Pri,Due,Active,Age,Description
+report.overdue.sort             = due+,priority-,start-,project+,description+
+
+report.phd.columns              = id,tags,project,start.active,description.count,due,priority
+report.phd.labels               = ID,Context,Project,A,Description,Due,Pri
+report.phd.filter               = status:pending depends.none: -waiting -hold pro:phd
+report.phd.sort                 = urgency-,due+,priority-,start-,project+,description+
+report.phd.description          = Lists the most urgent tasks for my Ph.D
+
+report.recurring.columns        = id,project,priority,due,recur,start.active,entry.age,description
+report.recurring.description    = Lists recurring tasks
+report.recurring.filter         = status:pending parent.any:
+report.recurring.labels         = ID,Project,Pri,Due,Recur,Active,Age,Description
+report.recurring.sort           = due+,priority-,start-,project+,description+
+
+# GTD Review
+# from http://taskwarrior.org/issues/339
+report.review.columns           = id,project,wait,due,priority,start,recur,tags,description
+report.review.description       = Lists all tasks, all data, matching the specified criteria
+report.review.filter            = status:pending
+report.review.labels            = ID,Project,Start,Due,Pri,Started,Recur,Tags,Description
+report.review.sort              = project+,due+,priority-,start-,id+
+
+report.today.columns            = id,tags,project,start.active,description.count,due,priority
+report.today.labels             = ID,Context,Project,A,Description,Due,Pri
+report.today.filter             = status:pending due.before:now or +today 
+report.today.sort               = urgency-,due+,priority-,start-,project+,description+
+report.today.description        = Lists the most urgent tasks for my Ph.D
+
+report.unblocked.columns        = id,depends,project,priority,due,start.active,entry.age,description
+report.unblocked.description    = Lists all unblocked tasks
+report.unblocked.filter         = status:pending depends.none:
+report.unblocked.labels         = ID,Deps,Project,Pri,Due,Active,Age,Description
+report.unblocked.sort           = due+,priority-,start-,project+,description+
+
+report.notstarted.columns          = id,project,priority,wait,entry.age,description
+report.notstarted.description      = Lists all waiting tasks
+report.notstarted.filter           = status:waiting +waiting
+report.notstarted.labels           = ID,Project,Pri,Wait,Age,Description
+report.notstarted.sort             = wait+,priority-,project+,description+
+
+report.waiting.columns          = id,project,priority,wait,entry.age,description.count
+report.waiting.description      = Lists all waiting tasks
+report.waiting.filter           = +waiting depends.none: status:pending
+report.waiting.labels           = ID,Project,Pri,Wait,Age,Description
+report.waiting.sort             = wait+,priority-,project+,description+

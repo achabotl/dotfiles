@@ -1,0 +1,39 @@
+[gui]
+	recentrepo = /Users/alexchabot/Documents/gitProject
+[color]
+	ui = true
+[alias]
+	st = status
+	ci = commit
+	ciam = commit -am
+	br = branch
+	co = checkout
+	df = diff
+	dff = diff HEAD
+    dfs = diff --cached
+	unstage = reset HEAD
+	u = reset HEAD
+	lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
+	lga = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative --all
+	last = log -1 HEAD
+	amend = commit --amend
+	oneline = log --pretty=oneline --abbrev-commit --graph
+	undo = reset --soft HEAD^
+	mateall = !git-ls-files -m -o --exclude-standard -z | xargs -0 mate
+	mate = !git-ls-files -m -z | xargs -0 mate
+	type = cat-file -t
+	dump = cat-file -p
+	ignored = "!git ls-files --others --exclude-standard"
+	tracks = !sh -c 'git branch --track "$0" "origin/$0" && git checkout "$0"'
+	track = !sh -c 'git branch --track "$0" "$1" && git checkout "$0"'
+[branch]
+	autosetupmerge = true
+[apply]
+ 	whitespace = nowarn
+[core]
+	#autocrlf = input
+	safecrlf = true
+	editor = mate -w
+	whitespace = nowarn
+[instaweb]
+  httpd=webrick

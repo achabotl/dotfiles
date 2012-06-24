@@ -1,0 +1,9 @@
+ControlPersist 2h
+ForwardAgent yes
+
+
+TCPKeepAlive no
+ServerAliveInterval 60
+ServerAliveCountMax 10
+
+ForwardX11 yes
