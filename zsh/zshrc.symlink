@@ -33,26 +33,6 @@ plugins=(git taskwarrior)
 
 source $ZSH/oh-my-zsh.sh
 
-# Customize to your needs...
-export PATH=/usr/local/sbin:/usr/local/bin:~/bin:/Users/chabot/bin/researchr:~/Library/Application\ Support/MultiMarkdown/bin:/Applications/MATLAB_R2011a.app/bin:/usr/bin:/usr/sbin:/sbin:/bin:/usr/local/CrossPack-AVR/bin:/usr/X11/bin:/usr/texbin:/Library/Frameworks/Python.framework/Versions/Current/bin:/usr/local/share/python:/Applications/MATLAB_R2011a.app/bin:/Library/Ruby/Gems/1.8:~/.gem/ruby/1.8:/System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/gems/1.8:/Users/chabot/.rvm/bin:/usr/local/mysql/bin
-export PYTHONPATH="/usr/local/lib/python2.7/site-packages":$PYTHONPATH
-export PYTHONPATH="${HOME}/Library/Python/2.7/site-packages":$PYTHONPATH
-
-alias tt='t "status:pending and (tag.contains:today or due.before:now )" gtd'
-alias ct='clear && t'
-alias to='taskopen'
-
-# From the zsh-lovers manpage
-# http://grml.org/zsh/zsh-lovers.html
-alias -g H='| head'
-alias -g HL='|& head -20'
-alias -g L="| less"
-alias -g LS='| less -S'
-alias -g T='| tail'
-alias -g NE="2> /dev/null"
-alias -g S='| sort'
-
-
 # 
 # shortcut to this dotfiles path is $ZSH
 export DOTFILES=$HOME/.dotfiles
