@@ -1,0 +1,75 @@
+# Git alis 
+alias gs='git status '
+alias ga='git add '
+alias gb='git branch '
+alias gc='git commit'
+alias gcm='git commit -m'
+alias gd='git diff'
+alias gdf='git diff HEAD'
+alias go='git checkout '
+alias gk='gitk --all&'
+alias gx='gitx --all'
+alias gath='git add msc_thesis.scriv*'
+
+# Correct mistypes
+alias got='git '
+alias get='git '
+
+# Show and hide files in a folder.
+alias show_hidden="defaults write com.apple.finder AppleShowAllFiles TRUE && killall Finder"
+alias hide_hidden="defaults write com.apple.finder AppleShowAllFiles FALSE && killall Finder"
+
+# Some shortcuts to navigate through directories
+alias .="pwd"
+alias ..="cd .."
+alias ...="cd .. ; cd .."
+alias cdmc="cd ~/Dropbox/MasterThesis/code"
+alias cdmas="cd ~/Dropbox/MasterThesis"
+alias cdp="cd ~/Dropbox/PhD"
+alias cdpc="cd ~/Dropbox/PhD/code"
+
+# Open the Notes folder in Textmate
+alias notes="mate ~/Notes"
+
+# Colorize matched outputs of grep
+alias grep="grep --color=auto"
+
+# Some shortcuts for formatted directory listing
+alias la="ls -a"
+alias ls="ls -F"
+
+# To start MATLAB without desktop tools
+alias matlab="cd ~/Documents/MATLAB;matlab -nosplash -nodesktop"
+
+# Alias to edit bash parameter files
+alias mprofile="mate ~/.profile"
+alias mbashrc="mate ~/.bashrc"
+alias mbashp="mate ~/.bash_profile"
+alias mbasha="mate ~/.bash_aliases"
+
+# Add to omnifocus
+alias oft="~/Library/Application\ Support/LaunchBar/Actions/OmniFocusCLI.sh"
+
+# Quicker ways
+alias p="python"
+alias ip="ipython"
+alias ipq="ipython qtconsole --pylab=inline"
+
+# Prevent history from showing the whole data
+alias histt="history | less"
+
+# Shortcuts to emacs
+# emacs_sc is a script from http://mikbe.tk/2011/04/18/build-emacs-with-xcode-4/
+# to have the shell interface by default in command line.
+alias em="emacs -nw"
+alias emw="emacs"
+alias emc="emacsclient"
+
+# Add note to day one, date and tags are parsed
+alias andayone='python ~/bin/add_text_entry_to_dayon.py'
+
+# TASKWARRIOR
+alias t='task '
+alias ta='task add '
+alias tn='tasknote '
+alias to='taskopen '
