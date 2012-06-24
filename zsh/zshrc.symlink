@@ -51,3 +51,25 @@ alias -g LS='| less -S'
 alias -g T='| tail'
 alias -g NE="2> /dev/null"
 alias -g S='| sort'
+
+
+# 
+# shortcut to this dotfiles path is $ZSH
+export DOTFILES=$HOME/.dotfiles
+
+# source every .zsh file in this rep
+for config_file ($DOTFILES/**/*.zsh) source $config_file
+
+# use .localrc for SUPER SECRET CRAP that you don't
+# want in your public, versioned repo.
+if [[ -a ~/.host_specific.sh ]]
+then
+  source ~/.host_specific.sh
+fi
+
+# initialize autocomplete here, otherwise functions won't be loaded
+autoload -U compinit
+compinit
+
+# load every completion after autocomplete loads
+for config_file ($DOTFILES/**/completion.sh) source $config_file
